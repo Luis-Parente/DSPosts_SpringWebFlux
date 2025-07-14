@@ -1,20 +1,10 @@
 package com.devsuperior.DSPosts.services;
 
-import java.time.Instant;
-import java.time.format.DateTimeParseException;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.devsuperior.DSPosts.model.dto.PostDTO;
-import com.devsuperior.DSPosts.model.entities.Post;
-import com.devsuperior.DSPosts.repositories.PostRepository;
-import com.devsuperior.DSPosts.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class PostService {
-
+/*
 	@Autowired
 	private PostRepository postRepository;
 
@@ -39,6 +29,5 @@ public class PostService {
 		}
 		catch (DateTimeParseException e) {
 			return alternative;
-		}
-	}
+	*/
 }

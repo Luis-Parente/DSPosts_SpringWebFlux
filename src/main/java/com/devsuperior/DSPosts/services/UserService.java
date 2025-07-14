@@ -1,19 +1,10 @@
 package com.devsuperior.DSPosts.services;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.devsuperior.DSPosts.model.dto.PostDTO;
-import com.devsuperior.DSPosts.model.dto.UserDTO;
-import com.devsuperior.DSPosts.model.entities.User;
-import com.devsuperior.DSPosts.repositories.UserRepository;
-import com.devsuperior.DSPosts.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class UserService {
-
+/*
 	@Autowired
 	private UserRepository userRepository;
 
@@ -61,5 +52,5 @@ public class UserService {
 		entity.setEmail(dto.getEmail());
 		entity.setName(dto.getName());
 	}
-
+*/
 }

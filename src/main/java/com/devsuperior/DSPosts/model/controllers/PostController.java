@@ -1,27 +1,15 @@
 package com.devsuperior.DSPosts.model.controllers;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.devsuperior.DSPosts.model.dto.PostDTO;
-import com.devsuperior.DSPosts.services.PostService;
-
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping(value = "/posts")
 @Tag(name = "Posts", description = "Controller for Posts")
 public class PostController {
-
+/*
 	@Autowired
 	private PostService postService;
 
@@ -49,5 +37,5 @@ public class PostController {
 			@RequestParam(defaultValue = "") String start, @RequestParam(defaultValue = "") String end) {
 		List<PostDTO> list = postService.fullSearch(text, start, end);
 		return ResponseEntity.ok().body(list);
-	}
+	}*/
 }
