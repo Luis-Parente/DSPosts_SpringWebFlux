@@ -34,21 +34,22 @@ public class UserService {
 		return result;
 	}
 	
+	public Mono<UserDTO> update(UserDTO dto, String id) {
+		return userRepository.findById(id).flatMap(x -> {
+			x.setName(dto.getName());
+			x.setEmail(dto.getEmail());
+			return userRepository.save(x);
+		}).map(x -> new UserDTO(x)).switchIfEmpty(Mono.error(new ResourceNotFoundException("Resource not found")));
+	} 
+	
 	private void copyDtoToEntity(User entity, UserDTO dto) {
 		entity.setEmail(dto.getEmail());
 		entity.setName(dto.getName());
 	} 
 
-	/*
-	public UserDTO update(UserDTO dto, String id) {
-		User entity = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Object not found"));
-		copyDtoToEntity(entity, dto);
-
-		entity = userRepository.save(entity);
-
-		return new UserDTO(entity);
-	}
-
+	
+	
+/*
 	public void delete(String id) {
 		userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Object not found"));
 		userRepository.deleteById(id);
