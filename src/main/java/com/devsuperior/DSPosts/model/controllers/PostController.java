@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devsuperior.DSPosts.model.dto.PostDTO;
@@ -13,6 +14,7 @@ import com.devsuperior.DSPosts.services.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -30,15 +32,15 @@ public class PostController {
 	public Mono<ResponseEntity<PostDTO>> findById(@PathVariable String id) {
 		return postService.findById(id).map(x -> ResponseEntity.ok().body(x));
 	}
-/*
+	
 	@Operation(description = "Get posts by title", summary = "Get list of posts by title", responses = {
 			@ApiResponse(description = "Ok", responseCode = "200")})
 	@GetMapping(value = "/titlesearch")
-	public ResponseEntity<List<PostDTO>> findByTitle(@RequestParam(defaultValue = "") String text) {
-		List<PostDTO> result = postService.findByTitle(text);
-		return ResponseEntity.ok().body(result);
+	public Flux<PostDTO> findByTitle(@RequestParam(defaultValue = "") String text) {
+		return postService.findByTitle(text);
 	}
 
+	/*
 	@Operation(description = "Get posts by moment, title, body and comments", summary = "Get list of posts by moment, title, body and comments", responses = {
 			@ApiResponse(description = "Ok", responseCode = "200")})
 	@GetMapping(value = "/fullsearch")
