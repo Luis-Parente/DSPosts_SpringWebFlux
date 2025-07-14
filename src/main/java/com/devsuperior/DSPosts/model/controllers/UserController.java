@@ -1,35 +1,45 @@
 package com.devsuperior.DSPosts.model.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devsuperior.DSPosts.model.dto.UserDTO;
+import com.devsuperior.DSPosts.services.UserService;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping(value = "/users")
 @Tag(name = "Users", description = "Controller for Users")
 public class UserController {
-/*
+
 	@Autowired
 	private UserService userService;
 
-	@Operation(description = "Get all users", summary = "Get list of users", responses = {
-			@ApiResponse(description = "Ok", responseCode = "200")})
+	@Operation(description = "Get all users", summary = "Get flux of users", responses = {
+			@ApiResponse(description = "Ok", responseCode = "200") })
 	@GetMapping(produces = "application/json")
-	public ResponseEntity<List<UserDTO>> findAll() {
-		List<UserDTO> result = userService.findAll();
-		return ResponseEntity.ok().body(result);
+	public Flux<UserDTO> findAll() {
+		return userService.findAll();
 	}
 
 	@Operation(description = "Get user by id", summary = "Get user by id", responses = {
 			@ApiResponse(description = "Ok", responseCode = "200"),
 			@ApiResponse(description = "Not Found", responseCode = "404"), })
 	@GetMapping(value = "/{id}", produces = "application/json")
-	public ResponseEntity<UserDTO> findById(@PathVariable String id) {
-		UserDTO result = userService.findById(id);
-		return ResponseEntity.ok().body(result);
+	public Mono<ResponseEntity<UserDTO>> findById(@PathVariable String id) {
+		return userService.findById(id).map(x -> ResponseEntity.ok().body(x));
 	}
 
+	/*
 	@Operation(description = "Create a new user", summary = "Create a new user", responses = {
 			@ApiResponse(description = "Created", responseCode = "201"),
 			@ApiResponse(description = "Bad Request", responseCode = "400"),
@@ -54,13 +64,13 @@ public class UserController {
 	@Operation(description = "Delete user", summary = "Delete user", responses = {
 			@ApiResponse(description = "Sucess", responseCode = "204"),
 			@ApiResponse(description = "Bad Request", responseCode = "400"),
-			@ApiResponse(description = "Not Found", responseCode = "404")})
+			@ApiResponse(description = "Not Found", responseCode = "404") })
 	@DeleteMapping(value = "/{id}", produces = "application/json")
 	public ResponseEntity<Void> delete(@PathVariable String id) {
 		userService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-	
+
 	@Operation(description = "Get posts by user id", summary = "Get all posts of user", responses = {
 			@ApiResponse(description = "Ok", responseCode = "200"),
 			@ApiResponse(description = "Not Found", responseCode = "404"), })

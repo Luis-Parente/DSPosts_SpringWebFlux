@@ -1,23 +1,29 @@
 package com.devsuperior.DSPosts.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.devsuperior.DSPosts.model.dto.UserDTO;
+import com.devsuperior.DSPosts.repositories.UserRepository;
+import com.devsuperior.DSPosts.services.exceptions.ResourceNotFoundException;
+
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 public class UserService {
-/*
+
 	@Autowired
 	private UserRepository userRepository;
 
-	public List<UserDTO> findAll() {
-		List<User> result = userRepository.findAll();
-		return result.stream().map(x -> new UserDTO(x)).toList();
+	public Flux<UserDTO> findAll() {
+		return userRepository.findAll().map(x -> new UserDTO(x));
 	}
 
-	public UserDTO findById(String id) {
-		User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Object not found"));
-		return new UserDTO(user);
+	public Mono<UserDTO> findById(String id) {
+		return userRepository.findById(id).map(x -> new UserDTO(x)).switchIfEmpty(Mono.error(new ResourceNotFoundException("Resource not found")));
 	}
-
+/*
 	public UserDTO insert(UserDTO dto) {
 		User entity = new User();
 		copyDtoToEntity(entity, dto);
@@ -51,6 +57,5 @@ public class UserService {
 	private void copyDtoToEntity(User entity, UserDTO dto) {
 		entity.setEmail(dto.getEmail());
 		entity.setName(dto.getName());
-	}
-*/
+	}*/
 }
