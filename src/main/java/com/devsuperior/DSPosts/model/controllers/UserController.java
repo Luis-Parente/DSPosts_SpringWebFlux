@@ -1,18 +1,29 @@
 package com.devsuperior.DSPosts.model.controllers;
 
+import java.net.URI;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import com.devsuperior.DSPosts.model.dto.PostDTO;
 import com.devsuperior.DSPosts.model.dto.UserDTO;
 import com.devsuperior.DSPosts.services.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -39,18 +50,16 @@ public class UserController {
 		return userService.findById(id).map(x -> ResponseEntity.ok().body(x));
 	}
 
-	/*
 	@Operation(description = "Create a new user", summary = "Create a new user", responses = {
 			@ApiResponse(description = "Created", responseCode = "201"),
 			@ApiResponse(description = "Bad Request", responseCode = "400"),
 			@ApiResponse(description = "Unprocessable Entity", responseCode = "422") })
 	@PostMapping(produces = "application/json")
-	public ResponseEntity<UserDTO> insert(@Valid @RequestBody UserDTO dto) {
-		UserDTO result = userService.insert(dto);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(result.getId()).toUri();
-		return ResponseEntity.created(uri).body(result);
+	public Mono<ResponseEntity<UserDTO>> insert(@Valid @RequestBody UserDTO dto, UriComponentsBuilder builder) {
+		return userService.insert(dto)
+				.map(x -> ResponseEntity.created(builder.path("/user/{id}").buildAndExpand(x.getId()).toUri()).body(x));
 	}
-
+/*
 	@Operation(description = "Update user", summary = "Update user data", responses = {
 			@ApiResponse(description = "Ok", responseCode = "200"),
 			@ApiResponse(description = "Bad Request", responseCode = "400"),
