@@ -18,11 +18,11 @@ public class UserService {
 	private UserRepository userRepository;
 
 	public Flux<UserDTO> findAll() {
-		return userRepository.findAll().map(x -> new UserDTO(x));
+		return userRepository.findAll().map(user -> new UserDTO(user));
 	}
 
 	public Mono<UserDTO> findById(String id) {
-		return userRepository.findById(id).map(x -> new UserDTO(x))
+		return userRepository.findById(id).map(user -> new UserDTO(user))
 				.switchIfEmpty(Mono.error(new ResourceNotFoundException("Resource not found")));
 	}
 
@@ -30,17 +30,18 @@ public class UserService {
 		User entity = new User();
 		copyDtoToEntity(entity, dto);
 
-		Mono<UserDTO> result = userRepository.save(entity).map(x -> new UserDTO(x));
+		Mono<UserDTO> result = userRepository.save(entity).map(user -> new UserDTO(user));
 
 		return result;
 	}
 
 	public Mono<UserDTO> update(UserDTO dto, String id) {
-		return userRepository.findById(id).flatMap(x -> {
-			x.setName(dto.getName());
-			x.setEmail(dto.getEmail());
-			return userRepository.save(x);
-		}).map(x -> new UserDTO(x)).switchIfEmpty(Mono.error(new ResourceNotFoundException("Resource not found")));
+		return userRepository.findById(id).flatMap(existingUser -> {
+			existingUser.setName(dto.getName());
+			existingUser.setEmail(dto.getEmail());
+			return userRepository.save(existingUser);
+		}).map(user -> new UserDTO(user))
+				.switchIfEmpty(Mono.error(new ResourceNotFoundException("Resource not found")));
 	}
 
 	private void copyDtoToEntity(User entity, UserDTO dto) {
@@ -51,7 +52,7 @@ public class UserService {
 	public Mono<Void> delete(String id) {
 		return userRepository.findById(id)
 				.switchIfEmpty(Mono.error(new ResourceNotFoundException("Resource not found")))
-				.flatMap(x -> userRepository.delete(x));
+				.flatMap(user -> userRepository.delete(user));
 
 	}
 	/*

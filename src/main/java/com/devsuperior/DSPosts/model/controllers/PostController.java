@@ -30,7 +30,7 @@ public class PostController {
 			@ApiResponse(description = "Not Found", responseCode = "404"), })
 	@GetMapping(value = "/{id}")
 	public Mono<ResponseEntity<PostDTO>> findById(@PathVariable String id) {
-		return postService.findById(id).map(x -> ResponseEntity.ok().body(x));
+		return postService.findById(id).map(postDto -> ResponseEntity.ok().body(postDto));
 	}
 
 	@Operation(description = "Get posts by title", summary = "Get list of posts by title", responses = {
