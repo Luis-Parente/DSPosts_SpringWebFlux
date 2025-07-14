@@ -25,7 +25,7 @@ This project is an adaptation of the DSPosts project, featuring a transition to 
 ### Clone the Repository
 ```bash
 git clone https://github.com/Luis-Parente/DSPosts_SpringWebFlux
-cd dsposts
+cd DSPosts_SpringWebFlux
 ````
 
 ### Start MongoDB with Docker
