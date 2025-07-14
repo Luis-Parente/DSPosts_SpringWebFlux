@@ -2,6 +2,7 @@ package com.devsuperior.DSPosts.model.dto;
 
 import com.devsuperior.DSPosts.model.entities.User;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 public class UserDTO {
@@ -10,6 +11,7 @@ public class UserDTO {
 	@NotBlank(message = "Required field")
 	private String name;
 	@NotBlank(message = "Required field")
+	@Email(message = "Field must be a valid email address")
 	private String email;
 
 	public UserDTO() {

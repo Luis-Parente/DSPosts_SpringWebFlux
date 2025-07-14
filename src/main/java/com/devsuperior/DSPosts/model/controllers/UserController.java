@@ -66,7 +66,6 @@ public class UserController {
 
 	@Operation(description = "Delete user", summary = "Delete user", responses = {
 			@ApiResponse(description = "Sucess", responseCode = "204"),
-			@ApiResponse(description = "Bad Request", responseCode = "400"),
 			@ApiResponse(description = "Not Found", responseCode = "404") })
 	@DeleteMapping(value = "/{id}", produces = "application/json")
 	public Mono<ResponseEntity<Void>> delete(@PathVariable String id) {
