@@ -1,5 +1,8 @@
 package com.devsuperior.DSPosts.services;
 
+import java.time.Instant;
+import java.time.format.DateTimeParseException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,15 +26,18 @@ public class PostService {
 	public Flux<PostDTO> findByTitle(String text) {
 		return postRepository.findByTitleContainingIgnoreCase(text).map(x -> new PostDTO(x));
 	}
-	/*
-	 * public List<PostDTO> fullSearch(String text, String start, String end) {
-	 * Instant startMoment = convertMoment(start, Instant.ofEpochMilli(0L)); Instant
-	 * endMoment = convertMoment(end, Instant.now()); return
-	 * postRepository.fullSearch(text, startMoment, endMoment).stream().map(x -> new
-	 * PostDTO(x)).toList(); }
-	 * 
-	 * private Instant convertMoment(String orignalText, Instant alternative) { try
-	 * { return Instant.parse(orignalText); } catch (DateTimeParseException e) {
-	 * return alternative;
-	 */
+
+	public Flux<PostDTO> fullSearch(String text, String start, String end) {
+		Instant startMoment = convertMoment(start, Instant.ofEpochMilli(0L));
+		Instant endMoment = convertMoment(end, Instant.now());
+		return postRepository.fullSearch(text, startMoment, endMoment).map(x -> new PostDTO(x));
+	}
+
+	private Instant convertMoment(String orignalText, Instant alternative) {
+		try {
+			return Instant.parse(orignalText);
+		} catch (DateTimeParseException e) {
+			return alternative;
+		}
+	}
 }

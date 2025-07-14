@@ -32,21 +32,19 @@ public class PostController {
 	public Mono<ResponseEntity<PostDTO>> findById(@PathVariable String id) {
 		return postService.findById(id).map(x -> ResponseEntity.ok().body(x));
 	}
-	
+
 	@Operation(description = "Get posts by title", summary = "Get list of posts by title", responses = {
-			@ApiResponse(description = "Ok", responseCode = "200")})
+			@ApiResponse(description = "Ok", responseCode = "200") })
 	@GetMapping(value = "/titlesearch")
 	public Flux<PostDTO> findByTitle(@RequestParam(defaultValue = "") String text) {
 		return postService.findByTitle(text);
 	}
 
-	/*
 	@Operation(description = "Get posts by moment, title, body and comments", summary = "Get list of posts by moment, title, body and comments", responses = {
-			@ApiResponse(description = "Ok", responseCode = "200")})
+			@ApiResponse(description = "Ok", responseCode = "200") })
 	@GetMapping(value = "/fullsearch")
-	public ResponseEntity<List<PostDTO>> fullSearch(@RequestParam(defaultValue = "") String text,
+	public Flux<PostDTO> fullSearch(@RequestParam(defaultValue = "") String text,
 			@RequestParam(defaultValue = "") String start, @RequestParam(defaultValue = "") String end) {
-		List<PostDTO> list = postService.fullSearch(text, start, end);
-		return ResponseEntity.ok().body(list);
-	}*/
+		return postService.fullSearch(text, start, end);
+	}
 }
