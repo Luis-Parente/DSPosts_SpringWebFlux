@@ -1,19 +1,18 @@
-# DSPosts
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://github.com/Luis-Parente/DSPosts/blob/main/LICENSE)
+# DSPosts_SpringWebFlux
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://github.com/Luis-Parente/DSPosts_SpringWebFlux/blob/main/LICENSE)
 
 ## Description
-This is a simple RESTful API built with Java Spring Boot and MongoDB for study purposes. The project demonstrates how to perform CRUD operations on blog posts and users.
+This project is an adaptation of the DSPosts project, featuring a transition to Spring WebFlux and Reactive MongoDB. It was created for study purposes and demonstrates how to perform CRUD operations on blog posts and users.
 
 ## 📋 Features
 - User and post management
-- MongoDB integration with Spring Data
-- RESTful API with CRUD operations
-- DTO pattern for data transfer and encapsulation
-- Basic one-to-many relationship (User ↔ Posts)
-- Data validation with Jakarta Bean Validation
-- Swagger UI for interactive API documentation
+- Reactive integration with MongoDB using Spring Data Reactive
+- RESTful API with asynchronous and non-blocking operations
+- DTO pattern for data encapsulation
+- Validation using Jakarta Bean Validation
+- Interactive API documentation with Swagger UI
 - Postman collection for API testing
-- Dockerized MongoDB instance
+- MongoDB instance via Docker
 - Layered architecture (Controller, Service, Repository)
 
 ## ✅ Requirements
@@ -25,7 +24,7 @@ This is a simple RESTful API built with Java Spring Boot and MongoDB for study p
 
 ### Clone the Repository
 ```bash
-git clone https://github.com/Luis-Parente/DSPosts
+git clone https://github.com/Luis-Parente/DSPosts_SpringWebFlux
 cd dsposts
 ````
 
@@ -55,8 +54,17 @@ Accessible at http://localhost:8080/swagger-ui/index.html. It provides a full li
 ### Postman
 Use Postman for a more flexible API testing experience.
 
-The repository includes a Postman collection (DSPosts.postman_collection.json)
+The repository includes a Postman collection (DSPosts_WebFlux.postman_collection)
 
 - Go to File > Import
 - Select the .json files from the repository
 - You can then send requests directly using the pre-configured endpoints and data.
+
+## 🧰 Tech Stack
+- Java 21
+- Spring WebFlux
+- Spring Data Reactive MongoDB
+- MongoDB
+- Docker
+- Swagger / OpenAPI
+- Maven
