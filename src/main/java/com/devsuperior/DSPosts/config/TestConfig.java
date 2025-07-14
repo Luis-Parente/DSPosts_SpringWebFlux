@@ -15,6 +15,8 @@ import com.devsuperior.DSPosts.repositories.PostRepository;
 import com.devsuperior.DSPosts.repositories.UserRepository;
 
 import jakarta.annotation.PostConstruct;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Configuration
 @Profile("test")
@@ -28,14 +30,17 @@ public class TestConfig {
 
 	@PostConstruct
 	public void init() {
-		userRepository.deleteAll();
-		postRepository.deleteAll();
-
-		User maria = new User(null, "Maria Brown", "maria@gmail.com");
+		Mono<Void> deleteUsers = userRepository.deleteAll();
+		deleteUsers.subscribe();
+		Mono<Void> deletePosts = postRepository.deleteAll();
+		deletePosts.subscribe();
+		
+		User maria = new User(null, "Maria Brown 2", "maria@gmail.com");
 		User alex = new User(null, "Alex Green", "alex@gmail.com");
 		User bob = new User(null, "Bob Grey", "bob@gmail.com");
 
-		userRepository.saveAll(Arrays.asList(maria, alex, bob));
+		Flux<User> insertUsers = userRepository.saveAll(Arrays.asList(maria, alex, bob));
+		insertUsers.subscribe();
 
 		Post post1 = new Post(null, Instant.parse("2021-02-13T11:15:01Z"), "Partiu viagem", "Vou viajar para São Paulo. Abraços!", new Author(maria));
 		Post post2 = new Post(null, Instant.parse("2021-02-14T10:05:49Z"), "Bom dia", "Acordei feliz hoje!", new Author(maria));
@@ -47,10 +52,8 @@ public class TestConfig {
 		post1.getComments().addAll(Arrays.asList(c1, c2));
 		post2.getComments().addAll(Arrays.asList(c3));
 
-		postRepository.saveAll(Arrays.asList(post1, post2));
-
-		maria.getPosts().addAll(Arrays.asList(post1, post2));
-		userRepository.save(maria);
+		Flux<Post> insertPosts = postRepository.saveAll(Arrays.asList(post1, post2));
+		insertPosts.subscribe();
 
 	}
 }
