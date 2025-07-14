@@ -22,7 +22,8 @@ public class UserService {
 	}
 
 	public Mono<UserDTO> findById(String id) {
-		return userRepository.findById(id).map(x -> new UserDTO(x)).switchIfEmpty(Mono.error(new ResourceNotFoundException("Resource not found")));
+		return userRepository.findById(id).map(x -> new UserDTO(x))
+				.switchIfEmpty(Mono.error(new ResourceNotFoundException("Resource not found")));
 	}
 
 	public Mono<UserDTO> insert(UserDTO dto) {
@@ -30,38 +31,37 @@ public class UserService {
 		copyDtoToEntity(entity, dto);
 
 		Mono<UserDTO> result = userRepository.save(entity).map(x -> new UserDTO(x));
-		
+
 		return result;
 	}
-	
+
 	public Mono<UserDTO> update(UserDTO dto, String id) {
 		return userRepository.findById(id).flatMap(x -> {
 			x.setName(dto.getName());
 			x.setEmail(dto.getEmail());
 			return userRepository.save(x);
 		}).map(x -> new UserDTO(x)).switchIfEmpty(Mono.error(new ResourceNotFoundException("Resource not found")));
-	} 
-	
+	}
+
 	private void copyDtoToEntity(User entity, UserDTO dto) {
 		entity.setEmail(dto.getEmail());
 		entity.setName(dto.getName());
-	} 
-
-	
-	
-/*
-	public void delete(String id) {
-		userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Object not found"));
-		userRepository.deleteById(id);
-
 	}
 
-	public List<PostDTO> getUserPosts(String id) {
-		User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Object not found"));
-		return user.getPosts().stream().map(x -> new PostDTO(x)).toList();
+	public Mono<Void> delete(String id) {
+		return userRepository.findById(id)
+				.switchIfEmpty(Mono.error(new ResourceNotFoundException("Resource not found")))
+				.flatMap(x -> userRepository.delete(x));
 
 	}
-
-	
-	*/
+	/*
+	 * public List<PostDTO> getUserPosts(String id) { User user =
+	 * userRepository.findById(id).orElseThrow(() -> new
+	 * ResourceNotFoundException("Object not found")); return
+	 * user.getPosts().stream().map(x -> new PostDTO(x)).toList();
+	 * 
+	 * }
+	 * 
+	 * 
+	 */
 }

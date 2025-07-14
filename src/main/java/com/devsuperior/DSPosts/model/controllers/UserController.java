@@ -2,6 +2,7 @@ package com.devsuperior.DSPosts.model.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -63,17 +64,16 @@ public class UserController {
 		return userService.update(dto, id).map(x -> ResponseEntity.ok().body(x));
 	}
 
-	/*
 	@Operation(description = "Delete user", summary = "Delete user", responses = {
 			@ApiResponse(description = "Sucess", responseCode = "204"),
 			@ApiResponse(description = "Bad Request", responseCode = "400"),
 			@ApiResponse(description = "Not Found", responseCode = "404") })
 	@DeleteMapping(value = "/{id}", produces = "application/json")
-	public ResponseEntity<Void> delete(@PathVariable String id) {
-		userService.delete(id);
-		return ResponseEntity.noContent().build();
+	public Mono<ResponseEntity<Void>> delete(@PathVariable String id) {
+		return userService.delete(id).then(Mono.just(ResponseEntity.noContent().<Void>build()));
 	}
 
+	/*
 	@Operation(description = "Get posts by user id", summary = "Get all posts of user", responses = {
 			@ApiResponse(description = "Ok", responseCode = "200"),
 			@ApiResponse(description = "Not Found", responseCode = "404"), })
