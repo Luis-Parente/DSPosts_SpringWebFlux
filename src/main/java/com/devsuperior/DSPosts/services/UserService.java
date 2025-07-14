@@ -44,11 +44,6 @@ public class UserService {
 				.switchIfEmpty(Mono.error(new ResourceNotFoundException("Resource not found")));
 	}
 
-	private void copyDtoToEntity(User entity, UserDTO dto) {
-		entity.setEmail(dto.getEmail());
-		entity.setName(dto.getName());
-	}
-
 	public Mono<Void> delete(String id) {
 		return userRepository.findById(id)
 				.switchIfEmpty(Mono.error(new ResourceNotFoundException("Resource not found")))
@@ -56,4 +51,8 @@ public class UserService {
 
 	}
 
+	private void copyDtoToEntity(User entity, UserDTO dto) {
+		entity.setEmail(dto.getEmail());
+		entity.setName(dto.getName());
+	}
 }

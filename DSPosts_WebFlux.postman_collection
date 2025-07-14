@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "7c601d8d-5ca7-46f1-8496-a695c21296ff",
+		"_postman_id": "6a23323b-8c15-462a-852a-3f5bcabcddd9",
 		"name": "DSPosts",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "26170376",
-		"_collection_link": "https://dsprod.postman.co/workspace/Java-Spring-aulas~5cff5d40-2e9f-4aee-8ebe-ac37cfad24c3/collection/26170376-7c601d8d-5ca7-46f1-8496-a695c21296ff?action=share&source=collection_link&creator=26170376"
+		"_exporter_id": "39070626"
 	},
 	"item": [
 		{
@@ -40,25 +39,6 @@
 							"path": [
 								"users",
 								"65dca9e0d70be071fb754110"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "User posts",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{host}}/users/65dca9e0d70be071fb754110/posts",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"users",
-								"65dca9e0d70be071fb754110",
-								"posts"
 							]
 						}
 					},
@@ -218,6 +198,25 @@
 									"key": "end",
 									"value": "2021-02-15T03:00:00Z"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User posts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/posts/user/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"user",
+								""
 							]
 						}
 					},
