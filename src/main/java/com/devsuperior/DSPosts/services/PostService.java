@@ -1,17 +1,23 @@
 package com.devsuperior.DSPosts.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.devsuperior.DSPosts.model.dto.PostDTO;
+import com.devsuperior.DSPosts.repositories.PostRepository;
+import com.devsuperior.DSPosts.services.exceptions.ResourceNotFoundException;
+
+import reactor.core.publisher.Mono;
 
 @Service
 public class PostService {
-/*
 	@Autowired
 	private PostRepository postRepository;
 
-	public PostDTO findById(String id) {
-		Post entity = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Object not found"));
-		return new PostDTO(entity);
+	public Mono<PostDTO> findById(String id) {
+		return postRepository.findById(id).map(x -> new PostDTO(x)).switchIfEmpty(Mono.error(new ResourceNotFoundException("Resource not found")));
 	}
+	/*
 
 	public List<PostDTO> findByTitle(String text) {
 		return postRepository.findByTitleContainingIgnoreCase(text).stream().map(x -> new PostDTO(x)).toList();
