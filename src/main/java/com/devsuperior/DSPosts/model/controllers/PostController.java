@@ -47,4 +47,11 @@ public class PostController {
 			@RequestParam(defaultValue = "") String start, @RequestParam(defaultValue = "") String end) {
 		return postService.fullSearch(text, start, end);
 	}
+
+	@Operation(description = "Get posts by user id", summary = "Get all posts of user", responses = {
+			@ApiResponse(description = "Ok", responseCode = "200") })
+	@GetMapping(value = "/user/{id}", produces = "application/json")
+	public Flux<PostDTO> findByUser(@PathVariable String id) {
+		return postService.findByUser(id);
+	}
 }

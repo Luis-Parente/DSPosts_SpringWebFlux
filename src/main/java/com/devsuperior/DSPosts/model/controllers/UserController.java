@@ -73,13 +73,4 @@ public class UserController {
 		return userService.delete(id).then(Mono.just(ResponseEntity.noContent().<Void>build()));
 	}
 
-	/*
-	@Operation(description = "Get posts by user id", summary = "Get all posts of user", responses = {
-			@ApiResponse(description = "Ok", responseCode = "200"),
-			@ApiResponse(description = "Not Found", responseCode = "404"), })
-	@GetMapping(value = "/{id}/posts", produces = "application/json")
-	public ResponseEntity<List<PostDTO>> getUserPosts(@PathVariable String id) {
-		List<PostDTO> result = userService.getUserPosts(id);
-		return ResponseEntity.ok().body(result);
-	}*/
 }

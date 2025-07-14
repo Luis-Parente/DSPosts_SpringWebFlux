@@ -55,14 +55,5 @@ public class UserService {
 				.flatMap(user -> userRepository.delete(user));
 
 	}
-	/*
-	 * public List<PostDTO> getUserPosts(String id) { User user =
-	 * userRepository.findById(id).orElseThrow(() -> new
-	 * ResourceNotFoundException("Object not found")); return
-	 * user.getPosts().stream().map(x -> new PostDTO(x)).toList();
-	 * 
-	 * }
-	 * 
-	 * 
-	 */
+
 }

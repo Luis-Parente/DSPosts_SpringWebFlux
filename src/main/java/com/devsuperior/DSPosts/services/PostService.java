@@ -3,6 +3,7 @@ package com.devsuperior.DSPosts.services;
 import java.time.Instant;
 import java.time.format.DateTimeParseException;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,10 @@ public class PostService {
 		Instant startMoment = convertMoment(start, Instant.ofEpochMilli(0L));
 		Instant endMoment = convertMoment(end, Instant.now());
 		return postRepository.fullSearch(text, startMoment, endMoment).map(post -> new PostDTO(post));
+	}
+
+	public Flux<PostDTO> findByUser(String id) {
+		return postRepository.findByUser(new ObjectId(id)).map(post -> new PostDTO(post));
 	}
 
 	private Instant convertMoment(String orignalText, Instant alternative) {
